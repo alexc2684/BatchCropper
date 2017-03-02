@@ -6,32 +6,36 @@ using namespace std;
 
 int main(int argc, char** argv )
 {
-  Mat image=imread("test.jpg",1);
-  cv::Size s = image.size();
-  float rows = s.height;
-  float cols = s.width;
+  float rows = 3456;
+  float cols = 5184;
   int xlen = (int) rows/500;
   int ylen = (int) cols/500;
-  cout << cols;
   int width=500,height=500;
   int count = 0;
-  for (int i = 250; i < cols - 1000; i += 500) {
-    for (int j = 250; j < rows - 1000; j += 500) {
-      // cout << i;
-      // cout << j;
-      Mat ROI(image, Rect(i,j,width,height));
+  for (int k = 0; k < 56; k++) {
+    std::string curr = std::to_string(k);
+    std::string name = "samples/" + curr + ".jpg";
+    Mat image=imread(name,1);
+    for (int i = 250; i < cols - 1000; i += 250) {
+      for (int j = 250; j < rows - 1000; j += 250) {
+        // cout << i;
+        // cout << j;
 
-      Mat croppedImage;
+        Mat ROI(image, Rect(i,j,width,height));
 
-      // Copy the data into new matrix
-      ROI.copyTo(croppedImage);
-      std::string c = std::to_string(count);
-      std::string name = "imgs/" + c + ".jpg";
-      imwrite(name,croppedImage);
+        Mat croppedImage;
 
-      count = count + 1;
+        // Copy the data into new matrix
+        ROI.copyTo(croppedImage);
+        std::string c = std::to_string(count);
+        std::string name = "imgs/" + curr + "-" + c + ".jpg";
+        imwrite(name,croppedImage);
+
+        count = count + 1;
+      }
     }
   }
+
 
 
 }
